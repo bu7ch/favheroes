@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeroListComponent } from './components/hero-list/hero-list.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [HeroListComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [HeroListComponent]
 })
 export class HeroesModule { }

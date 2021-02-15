@@ -3,17 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroListComponent } from './components/hero-list/hero-list.component';
 import { HeroComponent } from './components/hero/hero.component';
+import { HeroesModule } from './heroes/heroes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeroListComponent,
     HeroComponent
   ],
   imports: [
     BrowserModule,
+    HeroesModule,
     AppRoutingModule
   ],
   providers: [],
