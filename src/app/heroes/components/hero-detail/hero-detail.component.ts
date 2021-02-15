@@ -14,7 +14,7 @@ hero: Hero
   constructor(private heroDetailService: HeroDetailService) { }
 
   ngOnInit(): void {
-    this.hero = this.heroDetailService.getHero(this.id)
+    // this.hero = this.heroDetailService.getHero(this.id)
   }
 
 }

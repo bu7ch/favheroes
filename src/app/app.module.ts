@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { HeroesModule } from './heroes/heroes.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { DataService } from './data.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -14,6 +18,8 @@ import { HeroesModule } from './heroes/heroes.module';
   imports: [
     BrowserModule,
     HeroesModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(DataService),
     AppRoutingModule
   ],
   providers: [],

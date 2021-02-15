@@ -2,6 +2,15 @@
 <ul>
   <li *ngFor="let hero of heroes">
     hero : {{hero.name}} (id: {{hero.id}})
-    <app-hero-detail [id]="hero.id"></app-hero-detail>
+    <!-- <app-hero-detail [id]="hero.id"></app-hero-detail> -->
   </li>
 </ul>
+<div>
+  <button (click)="add('Robin')">Ajouter Robin</button>
+</div>
+<div>
+  <button (click)="rename(heroes[1])">renommer Batman en Prout </button>
+</div>
+<div>
+  <button (click)="remove(heroes[4])">Bye hero </button>
+</div>
