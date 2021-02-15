@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/data.service';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { Hero } from 'src/app/hero.model';
 import { HeroService } from 'src/app/hero.service';
 
@@ -10,13 +11,20 @@ import { HeroService } from 'src/app/hero.service';
 })
 export class HeroListComponent implements OnInit {
   heroes: Hero[];
+  private heroSub = new Subject();
   constructor(private heroService: HeroService) {}
 
   ngOnInit(): void {
     this.getHeroes();
   }
   private getHeroes() {
-    this.heroService.getHeroes().subscribe((heroes) => (this.heroes = heroes));
+    this.heroService.getHeroes().pipe(
+      map(heroes => this.heroes = heroes),
+      takeUntil(this.heroSub)
+    ).subscribe()
+  }
+  ngOnDestroy(): void {
+    this.heroSub.unsubscribe();
   }
 
   add(name: string) {
@@ -27,7 +35,7 @@ export class HeroListComponent implements OnInit {
   rename(hero: Hero) {
     const existingHero = { id: hero.id, name: 'Batman' };
     this.heroService.editHero(hero.id, existingHero).subscribe(() => {
-      this.heroes.find((hero) => hero.id).name = 'Batman';
+      this.heroes.find((hero) => hero.id).name = 'Prout';
     });
   }
   remove(hero: Hero) {

@@ -7,7 +7,8 @@ import { HeroComponent } from './components/hero/hero.component';
 import { HeroesModule } from './heroes/heroes.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './data.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 @NgModule({
@@ -22,7 +23,10 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientInMemoryWebApiModule.forRoot(DataService),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass:
+    AuthInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
