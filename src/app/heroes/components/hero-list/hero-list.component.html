@@ -1,11 +1,11 @@
 <h3>Mes Héros</h3>
 <ul>
-  <li *ngFor="let hero of heroes">
+  <li *ngFor="let hero of heroes$ | async">
     hero : {{hero.name}} (id: {{hero.id}})
     <!-- <app-hero-detail [id]="hero.id"></app-hero-detail> -->
   </li>
 </ul>
-<div>
+<!-- <div>
   <button (click)="add('Robin')">Ajouter Robin</button>
 </div>
 <div>
@@ -13,4 +13,4 @@
 </div>
 <div>
   <button (click)="remove(heroes[4])">Bye hero </button>
-</div>
+</div> -->

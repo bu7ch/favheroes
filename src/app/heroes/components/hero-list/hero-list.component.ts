@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { Hero } from 'src/app/hero.model';
 import { HeroService } from 'src/app/hero.service';
@@ -10,7 +10,7 @@ import { HeroService } from 'src/app/hero.service';
   styles: [],
 })
 export class HeroListComponent implements OnInit {
-  heroes: Hero[];
+  heroes$: Observable<Hero[]>;
   private heroSub = new Subject();
   constructor(private heroService: HeroService) {}
 
@@ -18,29 +18,32 @@ export class HeroListComponent implements OnInit {
     this.getHeroes();
   }
   private getHeroes() {
-    this.heroService.getHeroes().pipe(
-      map(heroes => this.heroes = heroes),
-      takeUntil(this.heroSub)
-    ).subscribe()
+    this.heroes$ = this.heroService.getHeroes()
+    // plus besoin avec la transformation de heroes en heroes$
+    /* .pipe(
+    //   map(heroes => this.heroes$ = heroes),
+    //   takeUntil(this.heroSub)
+     ).subscribe() */
   }
   ngOnDestroy(): void {
-    this.heroSub.unsubscribe();
+    this.heroSub.next();
+    this.heroSub.complete();
   }
 
-  add(name: string) {
-    this.heroService
-      .createHero(name)
-      .subscribe((hero) => this.heroes.push(hero));
-  }
-  rename(hero: Hero) {
-    const existingHero = { id: hero.id, name: 'Batman' };
-    this.heroService.editHero(hero.id, existingHero).subscribe(() => {
-      this.heroes.find((hero) => hero.id).name = 'Prout';
-    });
-  }
-  remove(hero: Hero) {
-    this.heroService.deleteHero(hero.id).subscribe(() => {
-      this.heroes = this.heroes.filter((selected) => selected !== hero);
-    });
-  }
+  // add(name: string) {
+  //   this.heroService
+  //     .createHero(name)
+  //     .subscribe((hero) => this.heroes$.push(hero));
+  // }
+  // rename(hero: Hero) {
+  //   const existingHero = { id: hero.id, name: 'Batman' };
+  //   this.heroService.editHero(hero.id, existingHero).subscribe(() => {
+  //     this.heroes$.find((hero) => hero.id).name = 'Prout';
+  //   });
+  // }
+  // remove(hero: Hero) {
+  //   this.heroService.deleteHero(hero.id).subscribe(() => {
+  //     this.heroes$ = this.heroes$.filter((selected) => selected !== hero);
+  //   });
+  // }
 }
