@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/data.service';
 import { Hero } from 'src/app/hero.model';
+
 @Component({
   selector: 'app-hero-list',
   templateUrl: './hero-list.component.html',
   styles: [],
 })
 export class HeroListComponent implements OnInit {
-  heroes: Hero[]
-  constructor() {}
+  heroes: Hero[];
+  constructor(private heroService: DataService) {}
 
   ngOnInit(): void {
-    this.heroes = [
-      {id: 1, name: 'Batou'},
-      {id: 2, name: 'Spidou'},
-      {id: 3, name: 'Dr.Octopus'},
-      
-    ];
+    this.heroes = this.heroService.getHeroes();
   }
 }
